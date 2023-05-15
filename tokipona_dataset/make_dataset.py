@@ -17,6 +17,10 @@ with open("models/config/model.yaml") as file:
 with open("models/config/tokipona.yaml") as file:
     lang = yaml.safe_load(file)
 
+ds = load_dataset("OpenAssistant/oasst1")
+train = ds['train']      # len(train)=84437 (95%)
+val = ds['validation']   # len(val)=4401 (5%)
+
 
 class MakeDataset(Dataset):
     def __init__(self, xs, ys):
@@ -65,8 +69,5 @@ def make_datasets(dataset):
 
 
 if __name__ == "__main__":
-    ds = load_dataset("OpenAssistant/oasst1")
-    train = ds['train']      # len(train)=84437 (95%)
-    val = ds['validation']   # len(val)=4401 (5%)
     train_dataset = make_datasets(train)
     val_dataset = make_datasets(val)
