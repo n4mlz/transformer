@@ -32,7 +32,7 @@ class MakeDataset(Dataset):
  
     def __getitem__(self, idx):
         x = torch.tensor(self.xs[idx], dtype=torch.float32)
-        y = torch.tensor(self.ys[idx], dtype=torch.float32)
+        y = torch.tensor(self.ys[idx], dtype=torch.int32).long()
         return x, y
 
 
@@ -52,7 +52,6 @@ def make_datasets(dataset, bulk, stop):
         for i in range(x.shape[-1] - idx):
             x[i + idx] = tokenizer.dict["[PAD]"]
         x = F.one_hot(x,num_classes=tokenizer.vocab_size)
-        y = F.one_hot(y,num_classes=tokenizer.vocab_size)
         return x, y
     
     for i, data in enumerate(dataset):
