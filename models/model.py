@@ -29,6 +29,8 @@ class Tokenizer:
         def enc(txt: str) -> list[str]:
             s = "[CLS]" + txt.lower().replace(","," , ").replace("."," . [SEP] ").replace("!"," ! [SEP] ").replace("?"," ? [SEP] ") + "  "
             s =  "".join([s[i] * (s[i] != " " or s[i+1] != " ") for i in range(len(s)-1)]).split(" ")
+            if s[-1] != "[SEP]":
+                s.append("[SEP]")
             s = [word if word in self.vocab else "[UNK]" for word in s]
             return s
         
@@ -201,8 +203,11 @@ if __name__ == '__main__':
     # z = torch.randn(64, 32, 384)
     # print(model(z).shape)
     t = Tokenizer(lang, 64)
-    a = t.encode('a, akesi ,anu . ')
-    b = t.encode(['a, akesi ,anu . ', 'a, akesi ,utala . e o'])
-    model = GPT(134, 12, 64, 8 ,4, 40, 0.1)
-    ans = model(b)
-    print(t.decode(ans))
+    a = t.encode('a, akesi ,anu')
+    print(a)
+    a = t.encode('a, akesi ,anu!')
+    print(a)
+    # b = t.encode(['a, akesi ,anu . ', 'a, akesi ,utala . e o'])
+    # model = GPT(134, 12, 64, 8 ,4, 40, 0.1)
+    # ans = model(b)
+    # print(t.decode(ans))
