@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from datasets import load_dataset
-import tokipona_dataset.translator
+from tokipona_dataset import translator
 from models import model
 import yaml
 

@@ -16,7 +16,7 @@ with open("models/config/tokipona.yaml") as file:
 class Tokenizer:
     def __init__(self, lang: list[str], max_length: int) -> None:
         self.special= ["[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"]
-        self.vocab = self.special + [",", ".", "!", "?"]
+        self.vocab = self.special + [",", ".", "!", "?", '"']
         self.vocab.extend(lang)
         self.vocab_size = len(self.vocab)
         self.max_length = max_length
@@ -25,9 +25,9 @@ class Tokenizer:
         for v, k in enumerate(self.vocab):
             self.dict[k] = v
     
-    def encode(self, txt: Union[str, list[str]]) -> torch.Tensor:
+    def encode(self, txt: Union[str, list[str]], padding: bool=False) -> torch.Tensor:
         def enc(txt: str) -> list[str]:
-            s = "[CLS]" + txt.lower().replace(","," , ").replace("."," . [SEP] ").replace("!"," ! [SEP] ").replace("?"," ? [SEP] ") + "  "
+            s = "[CLS]" + txt.lower().replace(","," , ").replace("."," . [SEP] ").replace("!"," ! [SEP] ").replace("?"," ? [SEP] ").replace('"',' " ') + "  "
             s =  "".join([s[i] * (s[i] != " " or s[i+1] != " ") for i in range(len(s)-1)]).split(" ")
             if s[-1] != "[SEP]":
                 s.append("[SEP]")
@@ -36,10 +36,12 @@ class Tokenizer:
         
         if type(txt) is str:
             s = enc(txt)
+            length = self.max_length if padding else len(s)
+            s += ["[PAD]"]*(length-len(s))
             s = [self.dict[word] for word in s]
         else:
             s = [enc(sent) for sent in txt]
-            length = min(max([len(sent) for sent in s]), self.max_length)
+            length = self.max_length if padding else min(max([len(sent) for sent in s]), self.max_length)
             s = [sent + ["[PAD]"]*(length-len(sent)) for sent in s]
             s = [[self.dict[word] for word in sent] for sent in s]
         
@@ -211,3 +213,5 @@ if __name__ == '__main__':
     # model = GPT(134, 12, 64, 8 ,4, 40, 0.1)
     # ans = model(b)
     # print(t.decode(ans))
+    print(t.encode('a, a!', True).shape)
+    print(t)

@@ -14,6 +14,8 @@ LANG_CODES = {
     "toki pona":"tl"    
 }
 
+model.to(device)
+
 def translate(text, src_lang, tgt_lang, candidates:int):
     """
     Translate the text from source lang to target lang
