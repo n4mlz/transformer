@@ -38,12 +38,12 @@ class Tokenizer:
             s = enc(txt)
             length = self.max_length if padding else len(s)
             s += ["[PAD]"]*(length-len(s))
-            s = [self.dict[word] for word in s]
+            s = [self.dict[s[i]] for i in range(length)]
         else:
             s = [enc(sent) for sent in txt]
             length = self.max_length if padding else min(max([len(sent) for sent in s]), self.max_length)
             s = [sent + ["[PAD]"]*(length-len(sent)) for sent in s]
-            s = [[self.dict[word] for word in sent] for sent in s]
+            s = [[self.dict[sent[i]] for i in range(length)] for sent in s]
         
         s = torch.tensor(s)
         s = F.one_hot(s,num_classes=self.vocab_size)

@@ -31,12 +31,14 @@ class MakeDataset(Dataset):
         return len(self.xs)
  
     def __getitem__(self, idx):
-        x = torch.FloatTensor(self.xs[idx])
-        y = torch.FloatTensor(self.ys[idx])
+        x = torch.tensor(self.xs[idx], dtype=torch.float32)
+        y = torch.tensor(self.ys[idx], dtype=torch.float32)
         return x, y
 
 
-def make_datasets(dataset, bulk: int=3, stop: int=len(Dataset)):
+def make_datasets(dataset, bulk, stop):
+    if stop == -1:
+        stop = len(dataset)
     max_length = config["Tokenizer"]["max_length"]
     tokenizer = model.Tokenizer(lang, max_length)
     x_dataset = []
@@ -67,7 +69,7 @@ def make_datasets(dataset, bulk: int=3, stop: int=len(Dataset)):
                         x_dataset.append(x)
                         y_dataset.append(y)
                         
-    print('/r', end="")
+    print('\r', end="")
     tokipona_dataset = MakeDataset(x_dataset, y_dataset)
     return tokipona_dataset
 

@@ -1,0 +1,8 @@
+train:
+  bulk: 2
+  stop: 200
+val:
+  bulk: 2
+  stop: 50
+batch: 256
+lr: 0.0006

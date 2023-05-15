@@ -1,25 +1,25 @@
 Tokenizer:
   max_length: 64
 InputLayer:
-  vocab_size: 134
-  emb_dim: 8  # multiple of head
+  vocab_size: 135
+  emb_dim: 4  # multiple of head
   max_length: 64
 Attention:
-  emb_dim: 8
+  emb_dim: 4
   dropout: 0.1
 MultiHeadAttention:
-  emb_dim: 8
+  emb_dim: 4
   head: 4
   hidden_dim: 32 # emb_dim * 4
   dropout: 0.1
 OutputLayer:
-  vocab_size: 134
-  emb_dim: 8
+  vocab_size: 135
+  emb_dim: 4
 GPT:
-  vocab_size: 134
-  emb_dim: 8
+  vocab_size: 135
+  emb_dim: 4
   max_length: 64
-  num_blocks: 8
+  num_blocks: 32
   head: 4
   hidden_dim: 40
   dropout: 0.1
