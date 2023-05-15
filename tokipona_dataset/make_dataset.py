@@ -53,7 +53,9 @@ def make_datasets(dataset):
         y = F.one_hot(y,num_classes=tokenizer.vocab_size)
         return x, y
     
-    for data in dataset:
+    l = len(dataset)
+    for i, data in enumerate(dataset):
+        print(f"loading: {i}/{l}")
         if data["lang"] == "en":
             sents = translator.translate(data["text"], "English", "toki pona", 10).split("\n")
             for sent in sents:
