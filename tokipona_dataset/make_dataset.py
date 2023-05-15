@@ -36,7 +36,7 @@ class MakeDataset(Dataset):
         return x, y
 
 
-def make_datasets(dataset):
+def make_datasets(dataset, bulk: int=3, stop: int=len(Dataset)):
     max_length = config["Tokenizer"]["max_length"]
     tokenizer = model.Tokenizer(lang, max_length)
     x_dataset = []
@@ -53,11 +53,12 @@ def make_datasets(dataset):
         y = F.one_hot(y,num_classes=tokenizer.vocab_size)
         return x, y
     
-    l = len(dataset)
     for i, data in enumerate(dataset):
-        print(f"loading: {i}/{l}")
+        if i >= stop:
+            break
+        print(f"\rloading: {i+1}/{stop}", end="")
         if data["lang"] == "en":
-            sents = translator.translate(data["text"], "English", "toki pona", 10).split("\n")
+            sents = translator.translate(data["text"], "English", "toki pona", bulk).split("\n")
             for sent in sents:
                 sent = tokenizer.encode(sent, True)
                 for  idx in range(max_length - 1):
@@ -65,7 +66,8 @@ def make_datasets(dataset):
                     if x != None:
                         x_dataset.append(x)
                         y_dataset.append(y)
-    
+                        
+    print('/r', end="")
     tokipona_dataset = MakeDataset(x_dataset, y_dataset)
     return tokipona_dataset
 
