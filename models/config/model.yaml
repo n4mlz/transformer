@@ -9,7 +9,7 @@ Attention:
   dropout: 0.1
 MultiHeadAttention:
   emb_dim: 4
-  head: 4
+  head: 1
   hidden_dim: 32 # emb_dim * 4
   dropout: 0.1
 OutputLayer:
@@ -20,6 +20,6 @@ GPT:
   emb_dim: 4
   max_length: 64
   num_blocks: 32
-  head: 4
+  head: 1
   hidden_dim: 40
   dropout: 0.1
