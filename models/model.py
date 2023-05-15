@@ -53,7 +53,7 @@ class Tokenizer:
         def dec(tns: list[int]) -> str:
             s = [self.vocab[word] for word in tns]
             s = [word for word in s if word not in self.special]
-            s = " ".join(s).replace(" ,", ",").replace(" .", ".")
+            s = " ".join(s).replace(" ,", ",").replace(" .", ".").replace(" !","!").replace(" ?","?")
             return s
         
         s = torch.argmax(tns, dim=-1)
@@ -208,9 +208,9 @@ if __name__ == '__main__':
     print(a)
     a = t.encode('a, akesi ,anu!')
     print(a)
-    # b = t.encode(['a, akesi ,anu . ', 'a, akesi ,utala . e o'])
-    # model = GPT(134, 12, 64, 8 ,4, 40, 0.1)
-    # ans = model(b)
+    b = t.encode(['a, akesi ,anu . ', 'a, akesi ,utala . e o'])
+    model = GPT(135, 12, 64, 8 ,4, 40, 0.1)
+    ans = model(b)
     # print(t.decode(ans))
     print(t.encode('a, a!', True).shape)
     print(t)
