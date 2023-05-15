@@ -171,7 +171,6 @@ class OutputLayer(nn.Module):
 
     def forward(self, z: torch.Tensor) -> torch.Tensor:
         out = self.ln(z)
-        out = F.softmax(out, dim=-1)
         return out
 
 
