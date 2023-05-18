@@ -27,7 +27,7 @@ class Tokenizer:
     
     def encode(self, txt: Union[str, list[str]], padding: bool=False) -> torch.Tensor:
         def enc(txt: str) -> list[str]:
-            s = "[CLS]" + txt.lower().replace(","," , ").replace("."," . [SEP] ").replace("!"," ! [SEP] ").replace("?"," ? [SEP] ").replace('"',' " ') + "  "
+            s = "[CLS] " + txt.lower().replace(","," , ").replace("."," . [SEP] ").replace("!"," ! [SEP] ").replace("?"," ? [SEP] ").replace('"',' " ') + "  "
             s =  "".join([s[i] * (s[i] != " " or s[i+1] != " ") for i in range(len(s)-1)]).split(" ")
             if s[-1] != "[SEP]":
                 s.append("[SEP]")

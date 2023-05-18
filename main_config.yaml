@@ -1,9 +1,9 @@
 train:
   bulk: 2
-  stop: 200
+  stop: 500
 val:
   bulk: 2
-  stop: 50
+  stop: 100
 batch: 256
 lr: 0.006
 epoch: 100

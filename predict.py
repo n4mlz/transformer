@@ -16,7 +16,7 @@ tokenizer = model.Tokenizer(lang, max_length)
 
 c = config["GPT"]
 GPT = model.GPT(c["vocab_size"], c["emb_dim"], c["max_length"], c["num_blocks"], c["head"], c["hidden_dim"], c["dropout"])
-GPT.load_state_dict(torch.load("weights/202305152158.pth", map_location=torch.device('cpu')))
+GPT.load_state_dict(torch.load("weights/202305181107.pth", map_location=torch.device('cpu')))
 
 
 def pred(prompt: str) -> str:
@@ -36,5 +36,4 @@ def pred(prompt: str) -> str:
 
 
 if __name__ == '__main__':
-    print(tokenizer.decode(tokenizer.encode("toki pona!")))
-    print(pred('toki pona'))
+    pred('mi')
