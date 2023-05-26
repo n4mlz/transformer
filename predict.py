@@ -36,4 +36,4 @@ def pred(prompt: str) -> str:
 
 
 if __name__ == '__main__':
-    pred('mi')
+    pred('toki!')
